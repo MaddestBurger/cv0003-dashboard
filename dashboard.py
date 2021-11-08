@@ -112,7 +112,7 @@ def linear_regression_multi(df,prime_stock, columns):
 def random_stock_walker(ticker,df):
     predict_df = df[ticker].iloc[-30:]
     last_price = predict_df.iloc[-1]
-    num_simulations = 500
+    num_simulations = 1000
     simulation_df = pd.DataFrame()
     returns = predict_df.pct_change()
     last_price_list = []
