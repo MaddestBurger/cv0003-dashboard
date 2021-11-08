@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import streamlit as st
-import altair as alt
 api_key = 'OWW8G2Z89A55WESC'
 
 
