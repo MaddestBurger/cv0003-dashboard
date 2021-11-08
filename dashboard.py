@@ -5,16 +5,11 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import requests as rq
-import json
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import streamlit as st
 api_key = 'OWW8G2Z89A55WESC'
-
-
-
-
 
 
 
@@ -111,8 +106,49 @@ def linear_regression_multi(df,prime_stock, columns):
     st.pyplot(fig3)
 
 
-#container1 = st.container()
-#container2 = st.container()
+
+  
+
+def random_stock_walker(ticker,df):
+    predict_df = df[ticker].iloc[-30:]
+    last_price = predict_df.iloc[-1]
+    num_simulations = 500
+    simulation_df = pd.DataFrame()
+    returns = predict_df.pct_change()
+    last_price_list = []
+    for x in range(num_simulations):
+        count = 0
+        daily_vol = returns.std()
+        mu = returns.mean()
+        price_series = []
+    
+        price = last_price * (1 + np.random.normal(mu, daily_vol))
+        price_series.append(price)   
+        for y in range(10):
+            if count == 10:
+                break
+            price = price_series[count] * (1 + np.random.normal(mu, daily_vol))
+            price_series.append(price)
+            count += 1
+            last_price_temp = price_series[-1]
+            last_price_list.append(last_price_temp)
+    
+        simulation_df[x] = price_series
+    st.line_chart(simulation_df)
+    fig5 = plt.figure(5,figsize = (8,8))
+    plt.hist(last_price_list,bins=100)
+    plt.axvline(np.percentile(last_price_list,5), color='r', linestyle='dashed', linewidth=2)
+    plt.axvline(np.percentile(last_price_list,95), color='r', linestyle='dashed', linewidth=2)
+    st.pyplot(fig5)
+    st.write("Expected price: ", round(np.mean(last_price_list),2))
+    st.write("Quantile (5%): ",np.percentile(last_price_list,5))
+    st.write("Quantile (95%): ",np.percentile(last_price_list,95))
+    
+    
+
+
+
+
 
 #with container1:
 with st.form('form_1'):
@@ -123,6 +159,9 @@ with st.form('form_1'):
     secondary_stocks = st.multiselect('Choose your stocks to perform analysis with', stocktickers,key='secondarystocks')
     
     submitted = st.form_submit_button("Submit")   
+    tickers = []
+    tickers.append(prime_stock)
+    tickers.extend(secondary_stocks)
         
     #if st.button('Confirm',key=0):
     if submitted:
@@ -145,6 +184,7 @@ with st.form('form_1'):
             #display da heat map
             fig, ax = plt.subplots()
             sns.heatmap(percent_change(df).corr(),annot=True,cmap='BuGn', ax=ax)
+            #sns.heatmap(df.corr(),annot=True,cmap='BuGn', ax=ax)
             st.write(fig)
             
 
@@ -156,17 +196,6 @@ if st.button('Confirm',key = 'regression_stock'):
         
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+stock_for_predict = st.selectbox('Choose he stock you want to predict', tickers, key = 2)
+if st.button('confirm', key = 3):
+    random_stock_walker(stock_for_predict,st.session_state.df)
