@@ -197,5 +197,5 @@ if st.button('Confirm',key = 'regression_stock'):
     
 
 stock_for_predict = st.selectbox('Choose he stock you want to predict', tickers, key = 2)
-if st.button('confirm', key = 3):
+if st.button('Confirm', key = 3):
     random_stock_walker(stock_for_predict,st.session_state.df)
