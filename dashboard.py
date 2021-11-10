@@ -139,6 +139,7 @@ def random_stock_walker(ticker,df):
     plt.hist(last_price_list,bins=100)
     plt.axvline(np.percentile(last_price_list,5), color='r', linestyle='dashed', linewidth=2)
     plt.axvline(np.percentile(last_price_list,95), color='r', linestyle='dashed', linewidth=2)
+    st.header('Monte-Carlo simulation of {}'.format(ticker))
     st.pyplot(fig5)
     st.write("Expected price: ", round(np.mean(last_price_list),2))
     st.write("Quantile (5%): ",np.percentile(last_price_list,5))
