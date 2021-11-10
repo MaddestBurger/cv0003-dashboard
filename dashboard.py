@@ -68,7 +68,6 @@ def percent_change(df):
 
 
 
-@st.cache(suppress_st_warning=True)
 def linear_regression_multi(df,prime_stock, columns):
     #split df into train and test data
     train_df, test_df = train_test_split(df, test_size=0.3, shuffle = False, random_state = 0)
