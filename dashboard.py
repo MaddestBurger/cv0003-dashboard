@@ -134,12 +134,13 @@ def random_stock_walker(ticker,df):
             last_price_list.append(last_price_temp)
     
         simulation_df[x] = price_series
+    st.header('Monte-Carlo simulation of {}'.format(ticker))
     st.line_chart(simulation_df)
     fig5 = plt.figure(5,figsize = (8,8))
     plt.hist(last_price_list,bins=100)
     plt.axvline(np.percentile(last_price_list,5), color='r', linestyle='dashed', linewidth=2)
     plt.axvline(np.percentile(last_price_list,95), color='r', linestyle='dashed', linewidth=2)
-    st.header('Monte-Carlo simulation of {}'.format(ticker))
+    st.header('Histogram chart of Monte-Carlo simulation of {}'.format(ticker))
     st.pyplot(fig5)
     st.write("Expected price: ", round(np.mean(last_price_list),2))
     st.write("Quantile (5%): ",np.percentile(last_price_list,5))
