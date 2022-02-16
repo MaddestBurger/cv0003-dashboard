@@ -175,11 +175,11 @@ with st.form('form_1'):
             st.session_state.df = df
             
             #display daily stock price
-            st.header('Daily Stock Price of {}'.format(tickers))
+            st.header('Weekly Stock Price of {}'.format(tickers))
             st.line_chart(df)
             
             #display daily relative return
-            st.header('Daily relative returns of {}'.format(tickers))
+            st.header('Weekly relative returns of {}'.format(tickers))
             st.line_chart(relreturn(df))
             
             #display da heat map
