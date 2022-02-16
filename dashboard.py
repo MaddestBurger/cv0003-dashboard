@@ -26,7 +26,7 @@ def get_stock_frame(tickers):
     for ticker in tickers:
       payload = {
           #define the parameters for the api call
-          "function": "TIME_SERIES_DAILY_ADJUSTED",
+          "function": "TIME_SERIES_WEEKLY_ADJUSTED",
           "symbol": ticker,
           "outputsize": "full", 
           "datatype": "json",
